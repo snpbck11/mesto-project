@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./pages/index.css">
+  <title>Mesto Russia</title>
+</head>
+<body class="page">
+  <header class="header">
+    <div class="header__container">
+      <img src="./images/logo.svg" alt="Место" class="header__logo">
+    </div>
+  </header>
+  <main class="content">
+    <section class="profile">
+      <div class="profile__container">
+        <img class="profile__avatar" src="./images/avatar.jpg" alt="Аватар">
+        <div class="profile__info">
+          <div class="profile__info-container">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button class="profile__edit-button button-hover"></button>
+          </div>
+          <p class="profile__about">Исследователь океана</p>
+        </div>
+        <button class="profile__add-button button-hover"></button>
+      </div>
+    </section>
+    <section class="gallery">
+      <div class="card">
+        <img class="card__photo" src="./images/karachevsk.jpg" alt="Карачаевск">
+        <div class="card__description">
+          <div class="card__description-container">
+            <h2 class="card__title">Карачаевск</h2>
+            <button class="card__like-button"></button>
+          </div>
+        </div>
+      </div> 
+      <div class="card">
+        <img class="card__photo" src="./images/elbrus.jpg" alt="Эльбрус">
+        <div class="card__description">
+          <div class="card__description-container">
+            <h2 class="card__title">Гора Эльбрус</h2>
+            <button class="card__like-button"></button>
+          </div>
+      </div>
+      </div> 
+      <div class="card">
+        <img class="card__photo" src="./images/dombai.jpg" alt="Домбай">
+        <div class="card__description">
+          <div class="card__description-container">
+            <h2 class="card__title">Домбай</h2>
+            <button class="card__like-button"></button>
+          </div>
+        </div>
+      </div> 
+      <div class="card">
+        <img class="card__photo" src="./images/elbrus.jpg" alt="Эльбрус">
+        <div class="card__description">
+          <div class="card__description-container">
+            <h2 class="card__title">Гора Эльбрус</h2>
+            <button class="card__like-button"></button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card__photo" src="./images/dombai.jpg" alt="Домбай">
+        <div class="card__description">
+          <div class="card__description-container">
+            <h2 class="card__title">Домбай</h2>
+            <button class="card__like-button"></button>
+          </div>
+        </div>
+      </div> 
+      <div class="card">
+        <img class="card__photo" src="./images/karachevsk.jpg" alt="Карачаев">
+        <div class="card__description">
+          <div class="card__description-container">
+            <h2 class="card__title">Карачаево-Черкессия</h2>
+            <button class="card__like-button"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main> 
+  <div class="popup popup_opened">
+    <div class="popup__container">
+      <button class="popup__close-button button-hover"></button>
+      <form class="form" name="edit">
+        <h3 class="form__title">Редактировать профиль</h3>
+        <input class="form__item form__item_el_person-name" type="text" id="person-name" name="person-name" placeholder="Ваше имя" value="Жак-Ив Кусто">
+        <input class="form__item" type="text" id="person-about" name="person-about" placeholder="О себе" value="Исследователь океана">
+        <input class="form__button" type="button" name="save" id="save" value="Сохранить">
+      </form>
+    </div>
+  </div>
+  <footer class="footer">
+    <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
+  </footer>
+</body>
+</html>
