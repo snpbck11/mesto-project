@@ -1,6 +1,5 @@
 .form {
   width: calc(100% - 72px);
-  height: 330px;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -9,6 +8,5 @@
 @media screen and (max-width: 670px) {
   .form {
     width: calc(100% - 44px);
-    height: 322px;
   }
 }
