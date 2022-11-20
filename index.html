@@ -23,7 +23,7 @@
       </div>
       <button type="button" class="profile__add-button button"></button>
     </section>
-    <section class="gallery">
+    <section class="gallery" aria-label="Галерея">
       <article class="card">
         <img class="card__photo" src="./images/karachevsk.jpg" alt="Карачаевск">
           <div class="card__description-container">
@@ -73,9 +73,9 @@
       <button type="button" class="popup__close-button button"></button>
       <form class="form" name="edit">
         <h3 class="form__title">Редактировать профиль</h3>
-        <input class="form__item" type="text" id="person-name" name="person-name" required placeholder="Ваше имя" value="Жак-Ив Кусто">
+        <input class="form__item" type="text" id="person-name" name="person-name" required placeholder="Имя" value="Жак-Ив Кусто">
         <input class="form__item" type="text" id="person-about" name="person-about" required placeholder="О себе" value="Исследователь океана">
-        <input class="form__button" type="submit" name="save" id="save" value="Сохранить">
+        <button class="form__button" type="submit">Сохранить</button>
       </form>
     </div>
   </div>
