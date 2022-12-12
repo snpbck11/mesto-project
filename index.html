@@ -30,6 +30,7 @@
             <h2 class="card__title">Карачаевск</h2>
             <button type="button" class="card__like-button"></button>
           </div>
+          <button type="button" class="button card__trash-button"></button>
       </article> 
       <article class="card">
         <img class="card__photo" src="./images/elbrus.jpg" alt="Эльбрус">
@@ -68,7 +69,7 @@
       </article>
     </section>
   </main> 
-  <div class="popup popup_opened">
+  <div class="popup">
     <div class="popup__container">
       <button type="button" class="popup__close-button button"></button>
       <form class="form" name="edit">
@@ -79,8 +80,20 @@
       </form>
     </div>
   </div>
+  <div class="popup">
+    <div class="popup__container">
+      <button type="button" class="popup__close-button button"></button>
+      <form class="form" name="edit">
+        <h3 class="form__title">Новое место</h3>
+        <input class="form__item" type="text" id="person-name" name="person-name" required placeholder="Название">
+        <input class="form__item" type="text" id="person-about" name="person-about" required placeholder="Ссылка на картинку">
+        <button class="form__button" type="button">Создать</button>
+      </form>
+    </div>
+  </div>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
   </footer>
+  <script src="./script.js"></script>
 </body>
 </html>

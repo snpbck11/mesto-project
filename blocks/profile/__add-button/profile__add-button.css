@@ -4,8 +4,6 @@
   background: url('../../../images/add-button.svg') no-repeat center;
   border: 2px solid #fff;
   border-radius: 2px;
-  box-sizing: border-box;
-  padding: 0;
 }
 
 @media screen and (max-width: 670px) {
