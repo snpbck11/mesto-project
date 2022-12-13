@@ -69,10 +69,10 @@
       </article>
     </section>
   </main> 
-  <div class="popup">
+  <div class="popup popup-edit"> 
     <div class="popup__container">
       <button type="button" class="popup__close-button button"></button>
-      <form class="form" name="edit">
+      <form class="form form-edit" name="edit">
         <h3 class="form__title">Редактировать профиль</h3>
         <input class="form__item" type="text" id="person-name" name="person-name" required placeholder="Имя" value="Жак-Ив Кусто">
         <input class="form__item" type="text" id="person-about" name="person-about" required placeholder="О себе" value="Исследователь океана">
@@ -80,20 +80,30 @@
       </form>
     </div>
   </div>
-  <div class="popup">
+  <div class="popup popup-add">
     <div class="popup__container">
       <button type="button" class="popup__close-button button"></button>
-      <form class="form" name="edit">
+      <form class="form form-add" name="add">
         <h3 class="form__title">Новое место</h3>
-        <input class="form__item" type="text" id="person-name" name="person-name" required placeholder="Название">
-        <input class="form__item" type="text" id="person-about" name="person-about" required placeholder="Ссылка на картинку">
-        <button class="form__button" type="button">Создать</button>
+        <input class="form__item" type="text" id="picture-name" name="picture-name" required placeholder="Название">
+        <input class="form__item" type="text" id="picture-url" name="picture-url" required placeholder="Ссылка на картинку">
+        <button class="form__button" type="submit">Создать</button>
       </form>
     </div>
   </div>
   <footer class="footer">
     <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
   </footer>
+  <template id="card-template">
+    <article class="card">
+      <img class="card__photo" src="" alt="">
+      <div class="card__description-container">
+        <h2 class="card__title">Карачаево-Черкессия</h2>
+        <button type="button" class="card__like-button"></button>
+      </div>
+      <button type="button" class="button card__trash-button"></button>
+    </article>
+  </template>
   <script src="./script.js"></script>
 </body>
 </html>
