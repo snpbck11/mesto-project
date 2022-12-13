@@ -9,7 +9,7 @@ const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const gallery = document.querySelector('.gallery');
 
-// Функция открытия и закрытия попапов (попробовать реализовать закрытие нажатием на оверлей)
+// Функция открытия и закрытия попапов, так же закрытие при нажатии на оверлей, если таков имеется
 function popupHandler(trigger, popup,) {
   trigger.addEventListener('click', () => {
     popup.classList.add('popup_opened');
@@ -55,15 +55,19 @@ function addCard(titleValue, photoValue) {
   cardElement.querySelector('.card__title').textContent = titleValue;
   cardElement.querySelector('.card__photo').src = photoValue;
   cardElement.querySelector('.card__photo').alt = titleValue;
-  cardElement.querySelector('.card__photo').addEventListener('click', function(evt) {
+
+  // Просмотр карточки
+  cardElement.querySelector('.card__photo').addEventListener('click', function(evt) { 
     document.querySelector('.popup-open-picture__image').src = photoValue;
     document.querySelector('.popup-open-picture__image').alt = photoValue;
     document.querySelector('.popup-open-picture__caption').textContent = titleValue;
     popupHandler(evt.target, popupPicture);
   });
+  // Смена цвета кнопки лайка
   cardElement.querySelector('.card__like-button').addEventListener('click', function(evt) {
      evt.target.classList.toggle('card__like-button_active');
   });
+  // Удаление карточки
   cardElement.querySelector('.card__trash-button').addEventListener('click', () => {
     cardElement.remove();
   });
@@ -88,9 +92,6 @@ function addFormSubmit(evt) {
 // Кнопка сабмита формы добавления карточек
 formAdd.addEventListener('submit', addFormSubmit);
 
-
-
-
 // Функция заполнения галереи карточками из массива
 function addCardsArray (array) {
   array.forEach(element => {
@@ -103,7 +104,6 @@ function addCardsArray (array) {
 // Вызов функции заполнения галереи 
 addCardsArray(initialCards);
 
-// Функция открытия картинки
 
 
 
