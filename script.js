@@ -10,7 +10,7 @@ const addButton = document.querySelector('.profile__add-button');
 const gallery = document.querySelector('.gallery');
 
 // Функция открытия и закрытия попапов, так же закрытие при нажатии на оверлей, если таков имеется
-function popupHandler(trigger, popup,) {
+function popupHandler(trigger, popup) {
   trigger.addEventListener('click', () => {
     popup.classList.add('popup_opened');
   });
@@ -57,9 +57,9 @@ function addCard(titleValue, photoValue) {
   cardElement.querySelector('.card__photo').alt = titleValue;
 
   // Просмотр карточки
-  cardElement.querySelector('.card__photo').addEventListener('click', function(evt) { 
+  cardElement.querySelector('.card__photo').addEventListener('mousedown', function(evt) { 
     document.querySelector('.popup-open-picture__image').src = photoValue;
-    document.querySelector('.popup-open-picture__image').alt = photoValue;
+    document.querySelector('.popup-open-picture__image').alt = titleValue;
     document.querySelector('.popup-open-picture__caption').textContent = titleValue;
     popupHandler(evt.target, popupPicture);
   });
@@ -72,7 +72,7 @@ function addCard(titleValue, photoValue) {
     cardElement.remove();
   });
   
-  gallery.prepend(cardElement);  
+  gallery.prepend(cardElement); 
 };
 
 // Обработчик формы добавления карточек
