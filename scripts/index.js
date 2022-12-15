@@ -1,6 +1,7 @@
 const popupEdit = document.querySelector('.popup-edit');  
 const popupAdd = document.querySelector('.popup-add');
 const popupPicture = document.querySelector('.popup-open-picture');
+const popupPictureClose = popupPicture('.popup__close-button');
 const formEdit = document.querySelector('.form-edit');
 const formAdd = document.querySelector('.form-add');
 const profileName = document.querySelector('.profile__name');
@@ -82,7 +83,7 @@ function createCard(titleValue, photoValue) {
     document.querySelector('.popup-open-picture__image').src = photoValue;
     document.querySelector('.popup-open-picture__image').alt = titleValue;
     document.querySelector('.popup-open-picture__caption').textContent = titleValue;
-    popupHandler(evt.target, popupPicture)
+    openPopup(evt.target, popupPicture);
   });
 
   // Смена цвета кнопки лайка
@@ -115,6 +116,9 @@ function addFormSubmit(evt) {
 
 // Кнопка сабмита формы добавления карточек
 formAdd.addEventListener('submit', addFormSubmit);
+
+//Функция закрытия попапа с изображением
+popupPictureClose.addEventListener('click', () => closePopup(popupPicture));
 
 // Функция заполнения галереи карточками из массива
 function addCardsArray (array) {
