@@ -1,7 +1,7 @@
 const popupEdit = document.querySelector('.popup-edit');  
 const popupAdd = document.querySelector('.popup-add');
 const popupPicture = document.querySelector('.popup-open-picture');
-const popupPictureClose = popupPicture('.popup__close-button');
+const popupPictureClose = popupPicture.querySelector('.popup__close-button');
 const formEdit = document.querySelector('.form-edit');
 const formAdd = document.querySelector('.form-add');
 const profileName = document.querySelector('.profile__name');
@@ -27,7 +27,7 @@ function closePopup(popup) {
 // Функция открытия и закрытия попапов, так же закрытие при нажатии на оверлей, если таков имеется. 
 // Отдельные коллбэки для форм редактирования профиля и карточек.
 function popupHandler(trigger, popup, callback) {
-  trigger.addEventListener('click', () => { 
+  trigger.addEventListener('click', () => {
     openPopup(popup);
     if (callback === edit) {
       nameInput.value = profileName.textContent;
@@ -35,11 +35,10 @@ function popupHandler(trigger, popup, callback) {
     } else if (callback === add) {
       pictureNameInput.value = '';
       linkInput.value = '';
-    };
+    }
   });
-
-  const popupCloseButton = popup.querySelector('.popup__close-button');
-  popupCloseButton.addEventListener('click', () => closePopup(popup));  
+    const popupCloseButton = popup.querySelector('.popup__close-button');
+    popupCloseButton.addEventListener('click', () => closePopup(popup));
 
   if (popup.className.includes('overlay')) {
     popup.addEventListener('mousedown', (evt) => {
@@ -49,6 +48,7 @@ function popupHandler(trigger, popup, callback) {
     });
   };
 };
+
 
 // Вызов функции попапа с формой редактирования профиля
 popupHandler(profileEditButton, popupEdit, edit);
@@ -79,11 +79,11 @@ function createCard(titleValue, photoValue) {
   cardPhoto.alt = titleValue;
 
    // Просмотр карточки 
-  cardPhoto.addEventListener('click', (evt) => { 
+  cardPhoto.addEventListener('click', () => { 
     document.querySelector('.popup-open-picture__image').src = photoValue;
     document.querySelector('.popup-open-picture__image').alt = titleValue;
     document.querySelector('.popup-open-picture__caption').textContent = titleValue;
-    openPopup(evt.target, popupPicture);
+    openPopup(popupPicture);
   });
 
   // Смена цвета кнопки лайка
