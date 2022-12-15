@@ -4,3 +4,7 @@
   object-position: center;
   aspect-ratio: 1 / 1;
 }
+
+.card__photo:hover {
+  cursor: pointer;
+}
