@@ -24,18 +24,19 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 };
 
-// Функция открытия и закрытия попапов, так же закрытие при нажатии на оверлей, если таков имеется. 
-// Отдельные коллбэки для форм редактирования профиля и карточек.
-function popupHandler(trigger, popup, callback) {
+function callback() {
+  nameInput.value = profileName.textContent; 
+  aboutInput.value = profileAbout.textContent;
+
+  pictureNameInput.value = '';
+  linkInput.value = ''
+};
+
+// Функция открытия и закрытия попапов, так же закрытие при нажатии на оверлей, если таков имеется. 3```
+function popupHandler(trigger, popup) {
   trigger.addEventListener('click', () => {
     openPopup(popup);
-    if (callback === edit) {
-      nameInput.value = profileName.textContent;
-      aboutInput.value = profileAbout.textContent;
-    } else if (callback === add) {
-      pictureNameInput.value = '';
-      linkInput.value = '';
-    }
+    callback();
   });
     const popupCloseButton = popup.querySelector('.popup__close-button');
     popupCloseButton.addEventListener('click', () => closePopup(popup));
@@ -49,12 +50,10 @@ function popupHandler(trigger, popup, callback) {
   };
 };
 
-
-// Вызов функции попапа с формой редактирования профиля
-popupHandler(profileEditButton, popupEdit, edit);
+popupHandler(profileEditButton, popupEdit);
 
 // Вызов функции попапа с формой добавления карточек
-popupHandler(cardsAddButton, popupAdd, add);
+popupHandler(cardsAddButton, popupAdd);
 
 // Обработчик «отправки» формы редактирования
 // она никуда отправляться не будет
