@@ -42,6 +42,7 @@ function popupHandler(trigger, popup, callback) {
   };
 };
 
+// Вызов функции попапа с формой редактирования профиля
 popupHandler(profileEditButton, popupEdit, () => {
   nameInput.value = profileName.textContent; 
   aboutInput.value = profileAbout.textContent;
@@ -65,7 +66,7 @@ function editFormSubmit(evt) {
 // Кнопка сабмита формы редактирования
 formEdit.addEventListener('submit', editFormSubmit);
 
-// Функция создания карточки (добавления, удаления и просмотра карточек
+// Функция создания, удаления и просмотра карточек
 function createCard(titleValue, photoValue) {
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
