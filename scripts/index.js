@@ -24,16 +24,8 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 };
 
-function callback() {
-  nameInput.value = profileName.textContent; 
-  aboutInput.value = profileAbout.textContent;
-
-  pictureNameInput.value = '';
-  linkInput.value = ''
-};
-
-// Функция открытия и закрытия попапов, так же закрытие при нажатии на оверлей, если таков имеется. 3```
-function popupHandler(trigger, popup) {
+// Функция открытия и закрытия попапов, так же закрытие при нажатии на оверлей, если таков имеется.
+function popupHandler(trigger, popup, callback) {
   trigger.addEventListener('click', () => {
     openPopup(popup);
     callback();
@@ -50,10 +42,16 @@ function popupHandler(trigger, popup) {
   };
 };
 
-popupHandler(profileEditButton, popupEdit);
+popupHandler(profileEditButton, popupEdit, () => {
+  nameInput.value = profileName.textContent; 
+  aboutInput.value = profileAbout.textContent;
+});
 
 // Вызов функции попапа с формой добавления карточек
-popupHandler(cardsAddButton, popupAdd);
+popupHandler(cardsAddButton, popupAdd, () => {
+  pictureNameInput.value = '';
+  linkInput.value = ''
+});
 
 // Обработчик «отправки» формы редактирования
 // она никуда отправляться не будет
@@ -121,7 +119,7 @@ popupPictureClose.addEventListener('click', () => closePopup(popupPicture));
 
 // Функция заполнения галереи карточками из массива
 function addCardsArray (array) {
-  array.forEach(element => {
+  array.reverse().forEach(element => {
     const item = createCard(element.name, element.link);
     
     addCard(item, gallery);
