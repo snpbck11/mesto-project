@@ -1,0 +1,19 @@
+{
+  "name": "mesto-project",
+  "version": "0.0.1",
+  "description": "Проект свёрстан с макета Figma, адаптивный под разные разрешения экрана.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snpbck11/mesto-project.git"
+  },
+  "author": "Boris Savelyev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/snpbck11/mesto-project/issues"
+  },
+  "homepage": "https://github.com/snpbck11/mesto-project#readme"
+}
