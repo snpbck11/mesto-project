@@ -1,12 +1,5 @@
 .form {
-  width: calc(100% - 72px);
-  margin: auto;
   display: flex;
   flex-direction: column;
-}
-
-@media screen and (max-width: 670px) {
-  .form {
-    width: calc(100% - 44px);
-  }
+  gap: 45px;
 }

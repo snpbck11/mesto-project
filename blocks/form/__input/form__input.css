@@ -1,19 +1,16 @@
-.form__item {
+.form__input {
+  width: 100%;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
   background-color: transparent;
   border: none;
   outline: none;
-  height: 27px;
   border-bottom: 1px solid rgba(0, 0, 0, .2);
   padding: 0;
+  padding-bottom: 8px;
 }
 
-.form__item:focus {
+.form__input:focus {
   outline-style: none;
-}
-
-.form__item:first-of-type {
-  margin-bottom: 30px;
 }

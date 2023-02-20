@@ -29,30 +29,46 @@
   <div class="popup popup-edit overlay"> 
     <div class="popup__container">
       <button type="button" class="popup__close-button button"></button>
-      <form class="form form-edit" name="edit">
-        <h3 class="form__title">Редактировать профиль</h3>
-        <input class="form__item" type="text" id="person-name" name="person-name" required placeholder="Имя" value="Жак-Ив Кусто">
-        <input class="form__item" type="text" id="person-about" name="person-about" required placeholder="О себе" value="Исследователь океана">
-        <button class="form__button" type="submit">Сохранить</button>
+      <h3 class="popup__title">Редактировать профиль</h3>
+      <form class="form form-edit" name="edit" novalidate>
+        <fieldset class="form__set">
+          <label class="form__label">
+            <input class="form__input" type="text" id="name" name="name" required placeholder="Имя" value="Жак-Ив Кусто" minlength="2" maxlength="40">
+            <span class="form__error name-error"></span>
+          </label>
+          <label class="form__label">
+            <input class="form__input" type="text" id="about" name="about" required placeholder="О себе" value="Исследователь океана" minlength="2" maxlength="200">
+            <span class="form__error about-error"></span>
+          </label>
+        </fieldset>
+        <button class="form__button" type="submit" name="submit">Сохранить</button>
       </form>
     </div>
   </div>
   <div class="popup popup-add overlay">
     <div class="popup__container">
       <button type="button" class="popup__close-button button"></button>
-      <form class="form form-add" name="add">
-        <h3 class="form__title">Новое место</h3>
-        <input class="form__item" type="text" id="picture-name" name="picture-name" required placeholder="Название">
-        <input class="form__item" type="text" id="picture-link" name="picture-link" required placeholder="Ссылка на картинку">
-        <button class="form__button" type="submit">Создать</button>
+      <h3 class="popup__title">Новое место</h3>
+      <form class="form form-add" name="add" novalidate>
+        <fieldset class="form__set">
+          <label class="form__label">
+            <input class="form__input" type="text" id="title" name="title" required placeholder="Название">
+            <span class="form__error title-error"></span>
+          </label>
+          <label class="form__label">
+            <input class="form__input" type="url" id="link" name="link" required placeholder="Ссылка на картинку">
+            <span class="form__error link-error"></span>
+          </label>
+        </fieldset> 
+        <button class="form__button form__button_disabled" type="submit" name="submit" disabled>Создать</button>
       </form>
     </div>
   </div>
-  <div class="popup popup-open-picture overlay">
-    <div class="popup-open-picture__container">
+  <div class="popup popup-picture overlay">
+    <div class="popup-picture__container">
       <button type="button" class="popup__close-button button"></button>
-      <img class="popup-open-picture__image" src="" alt=""> 
-      <figcaption class="popup-open-picture__caption"></figcaption>     
+      <img class="popup-picture__image" src="" alt=""> 
+      <figcaption class="popup-picture__caption"></figcaption>     
     </div>
   </div>
   <footer class="footer">
