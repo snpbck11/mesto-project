@@ -17,6 +17,8 @@ const profileEditButton = document.querySelector('.profile__edit-button');
 const cardsAddButton = document.querySelector('.profile__add-button');
 const gallery = document.querySelector('.gallery');
 
+
+
 // Функция открытия попапа
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -72,30 +74,14 @@ formEdit.addEventListener('submit', editFormSubmit);
 function createCard(titleValue, photoValue) {
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-  const cardPhoto = cardElement.querySelector('.card__photo');
 
   cardElement.querySelector('.card__title').textContent = titleValue;
-  cardPhoto.src = photoValue;
-  cardPhoto.alt = titleValue;
-
-  popupHandler(cardPhoto, popupPicture, () => {
-    popupPicture.querySelector('.popup-picture__image').src = photoValue;
-    popupPicture.querySelector('.popup-picture__image').alt = titleValue;
-    popupPicture.querySelector('.popup-picture__caption').textContent = titleValue;
-  })
-
-  // Смена цвета кнопки лайка
-  cardElement.querySelector('.card__like-button').addEventListener('click', (evt) => {
-    evt.target.classList.toggle('card__like-button_active');
-  });
-
-  // Удаление карточки
-  cardElement.querySelector('.card__trash-button').addEventListener('click', () => {
-    cardElement.remove();
-  });
+  cardElement.querySelector('.card__photo').src = photoValue;
+  cardElement.querySelector('.card__photo').alt = titleValue;
 
   return cardElement;
 };
+
 
 // Функция добавления карточки
 function addCard(card, container) {
@@ -108,15 +94,18 @@ function addFormSubmit(evt) {
   const card = createCard(pictureNameInput.value, linkInput.value);
 
   addCard(card, gallery);
-  evt.target.querySelector('.form__button').classList.add('form__button_disabled')
+  evt.target.querySelector('.form__button').classList.add('form__button_disabled');
+  showCards();
+  setLike();
+  removeCard();
   closePopup(popupAdd);
 };
 
-// Кнопка сабмита формы добавления карточек
+// Cабмита формы добавления карточек
 formAdd.addEventListener('submit', addFormSubmit);
 
 // Функция заполнения галереи карточками из массива
-function addCardsArray (array) {
+function addCardsArray(array) {
   array.reverse().forEach(element => {
     const item = createCard(element.name, element.link);
     
@@ -127,35 +116,76 @@ function addCardsArray (array) {
 // Вызов функции заполнения галереи 
 addCardsArray(initialCards);
 
+// Просмотр карточек
+function showCards() {
+  const photos = document.querySelectorAll('.card__photo');
+  photos.forEach(photo => {
+    popupHandler(photo, popupPicture, () => {
+      popupPicture.querySelector('.popup-picture__image').src = photo.src;
+      popupPicture.querySelector('.popup-picture__image').alt = photo.alt;
+      popupPicture.querySelector('.popup-picture__caption').textContent = photo.alt;
+    })
+  })
+}
+
+showCards();
+
+// Лайки
+function setLike() {
+  const likes = document.querySelectorAll('.card__like-button')
+  likes.forEach(like => {
+    like.addEventListener('click', (evt) => {
+      evt.target.classList.toggle('card__like-button_active')
+    })
+  })
+}
+
+setLike();
+
+// Удаление карточки
+function removeCard() {
+  const trashButtons =  document.querySelectorAll('.card__trash-button');
+  trashButtons.forEach(button => {
+    button.addEventListener('click', (evt) => {
+      evt.target.parentElement.remove();
+    })
+  });
+}
+
+removeCard();
 // Валидация форм
+
+// Показать ошибку валидации
 const showInputError = (form, input, errorMessage) => {
   const error = form.querySelector(`.${input.id}-error`);
   input.classList.add('form__input_type_error');
   error.textContent = errorMessage;
-  error.classList.add('form__error_active')
+  error.classList.add('form__error_visible')
 }
-
+// Скрыть ошибку валидации
 const hideInputError = (form, input) => {
   const error = form.querySelector(`.${input.id}-error`);
   input.classList.remove('form__input_type_error');
   input.classList.remove('form__input_type_error');
   error.textContent = '';
 }
-
+// Проверка инпута на валидность, и всплытие соответсвующих validationMessage
 const checkValidity = (form, input) =>{
-  if (!input.validity.valid) {
+  if (input.validity.patternMismatch) {
+    showInputError(form, input, input.dataset.error)
+  } else if (!input.validity.valid) {
     showInputError(form, input, input.validationMessage)
   } else {
     hideInputError(form, input)
   }
 }
-
+// Поиск невалидного инпута
 const hasInvalidInput = (inputList) => {
   return inputList.some(input => {
     return !input.validity.valid;
   })
 }
-
+// Смена состояния кнопки в зависимости от валидности формы
 const toggleButtonState = (inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.disabled = true;
@@ -165,7 +195,7 @@ const toggleButtonState = (inputList, buttonElement) => {
     buttonElement.classList.remove('form__button_disabled')
   }
 }
-
+// Функция устоновки прослушивателя события
 const setEventListeners = (form) => {
   const inputList = Array.from(form.querySelectorAll('.form__input'));
   const buttonSubmit = form.querySelector('.form__button');
@@ -186,12 +216,3 @@ const enableValidation = () => {
 }
 
 enableValidation()
-
-// ПРойти регулярки еще раз...................
-
-let regEx = /\W+\-/gi;
-
-let a = 'бибаc - боба'
-
-console.log(regEx.test(a));
-console.log(a.match(regEx));

@@ -33,7 +33,7 @@
       <form class="form form-edit" name="edit" novalidate>
         <fieldset class="form__set">
           <label class="form__label">
-            <input class="form__input" type="text" id="name" name="name" required placeholder="Имя" value="Жак-Ив Кусто" minlength="2" maxlength="40">
+            <input class="form__input" type="text" id="name" name="name" required placeholder="Имя" value="Жак-Ив Кусто" minlength="2" maxlength="40" data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" pattern="[a-zA-Z|а-яёА-ЯЁ \s\-]*">
             <span class="form__error name-error"></span>
           </label>
           <label class="form__label">
@@ -52,7 +52,7 @@
       <form class="form form-add" name="add" novalidate>
         <fieldset class="form__set">
           <label class="form__label">
-            <input class="form__input" type="text" id="title" name="title" required placeholder="Название">
+            <input class="form__input" type="text" id="title" name="title" required placeholder="Название" minlength="2" maxlength="30" data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" pattern="[a-zA-Z|а-яёА-ЯЁ \s\-]*"">
             <span class="form__error title-error"></span>
           </label>
           <label class="form__label">
