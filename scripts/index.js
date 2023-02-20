@@ -38,6 +38,12 @@ function popupHandler(trigger, popup, callback) {
     const popupCloseButton = popup.querySelector('.popup__close-button');
     popupCloseButton.addEventListener('click', () => closePopup(popup));
 
+  window.addEventListener('keydown', (evt) => {
+    if (evt.key === 'Escape') {
+      closePopup(popup)
+    }
+  })
+
   if (popup.className.includes('overlay')) {
     popup.addEventListener('mousedown', (evt) => {
       if (evt.target === popup) {
@@ -202,7 +208,8 @@ const setEventListeners = (form) => {
   toggleButtonState(inputList, buttonSubmit)
   
   inputList.forEach(input => {
-    input.addEventListener('input', () => {
+    input.addEventListener('input', (evt) => {
+      console.log(evt.key)
       checkValidity(form, input);
       toggleButtonState(inputList, buttonSubmit)
     })
