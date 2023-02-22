@@ -1,52 +1,43 @@
-// Функция открытия попапа
-const openPopup = (popup) => {
-  popup.classList.add('popup_opened');
-};
-
 // Функция закрытия попапа
 const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeByEscape)
 };
 
-const closePopupKeyDown = (popup) => {
-  window.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape') {
-      closePopup(popup)
-    }
-  })
+// Функция открытия попапа
+const openPopup = (popup) => {
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closeByEscape);
+};
+
+//  Закрытие попапа нажатием на Esc
+const closeByEscape = (evt) => {
+  if (evt.key === 'Escape') {
+   const popupOpened = document.querySelector('.popup_opened');
+   closePopup(popupOpened);
+  }
 }
 
-// Функция открытия и закрытия попапов, так же закрытие при нажатии на оверлей, если таков имеется.
-const popupHandler = (trigger, popup, callback) => {
-  trigger.addEventListener('click', () => {
-    openPopup(popup);
+const handlePopup = (popup, callback) => {
+  openPopup(popup);
+
+  if (callback) {
     callback();
-  });
+  }
+
+  const popups = document.querySelectorAll('.popup');
   
-  const popupCloseButton = popup.querySelector('.popup__close-button');
-  popupCloseButton.addEventListener('click', () => closePopup(popup));
-
-  closePopupKeyDown(popup);  
-
-  if (popup.className.includes('overlay')) {
+  popups.forEach(popup => {
     popup.addEventListener('mousedown', (evt) => {
-      if (evt.target === popup) {
-        closePopup(popup);
-      };
-    });
-  };
+      if (evt.target.classList.contains('popup_opened')) {
+        closePopup(popup)
+      }
+
+      if (evt.target.classList.contains('popup__close-button')) {
+        closePopup(popup)
+      }
+    })
+  });
 };
 
-// Просмотр карточек
-const showCards = (popup) => {
-  const photos = document.querySelectorAll('.card__photo');
-  photos.forEach(photo => {
-    popupHandler(photo, popup, () => {
-      popup.querySelector('.popup-picture__image').src = photo.src;
-      popup.querySelector('.popup-picture__image').alt = photo.alt;
-      popup.querySelector('.popup-picture__caption').textContent = photo.alt;
-    })
-  })
-}
-
-export {openPopup, closePopup, closePopupKeyDown, popupHandler, showCards}
+export {closePopup, handlePopup}

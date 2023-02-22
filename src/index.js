@@ -1,24 +1,24 @@
-import './index.css';
-
-import {popupAdd, popupEdit, popupPicture, formAdd, formEdit, nameInput, aboutInput, pictureNameInput, linkInput, profileName, profileAbout, profileEditButton, cardsAddButton, gallery} from './components/utils.js';
+import {popupAdd, popupEdit, formAdd, formEdit, nameInput, aboutInput, pictureNameInput, linkInput, profileName, profileAbout, profileEditButton, cardsAddButton, gallery, initialCards} from './components/constants.js';
 import {enableValidation} from './components/validate.js';
-import {createCard, addCard, setLike, removeCard, initialCards} from './components/cards.js';
-import {closePopup, popupHandler, showCards} from './components/modals.js'
+import {createCard, addCard, addCardsArray} from './components/cards.js';
+import {closePopup, handlePopup} from './components/modals.js'
 
-// Вызов функции попапа с формой редактирования профиля
-popupHandler(profileEditButton, popupEdit, () => {
-  nameInput.value = profileName.textContent; 
-  aboutInput.value = profileAbout.textContent;
-});
+// Обработчик кнопки редактирования профиля
+profileEditButton.addEventListener('click', () => {
+  handlePopup(popupEdit, () => {
+    nameInput.value = profileName.textContent; 
+    aboutInput.value = profileAbout.textContent;
+  })
+})
 
-// Вызов функции попапа с формой добавления карточек
-popupHandler(cardsAddButton, popupAdd, () => {
-  formAdd.reset();
-});
+// Обработчик кнопки добавления карточек
+cardsAddButton.addEventListener('click', () => {
+  handlePopup(popupAdd)
+})
 
 // Обработчик «отправки» формы редактирования
 // она никуда отправляться не будет
-const editFormSubmit = (evt) => {
+const handleProfileFormSubmit = (evt) => {
     evt.preventDefault();  
     profileName.textContent = nameInput.value;
     profileAbout.textContent = aboutInput.value;
@@ -26,41 +26,25 @@ const editFormSubmit = (evt) => {
 };
 
 // Cабмит формы редактирования
-formEdit.addEventListener('submit', editFormSubmit);
-
-// Функция заполнения галереи карточками из массива
-const addCardsArray = (array) => {
-  array.reverse().forEach(element => {
-    const item = createCard(element.name, element.link);
-    
-    addCard(item, gallery);
-  });
-};
+formEdit.addEventListener('submit', handleProfileFormSubmit);
 
 // Обработчик формы добавления карточек
-const addFormSubmit = (evt) => {
+const handleCardFormSubmit = (evt) => {
   evt.preventDefault();
   const card = createCard(pictureNameInput.value, linkInput.value);
 
   addCard(card, gallery);
-  evt.target.querySelector('.form__button').classList.add('form__button_disabled');
-  showCards(popupPicture);
-  setLike();
-  removeCard();
   closePopup(popupAdd);
+  evt.target.reset();
 };
 
 // Cабмит формы добавления карточек
-formAdd.addEventListener('submit', addFormSubmit);
-// Вызов функции добавления карточек из массива
-addCardsArray(initialCards);
-// Вызов функции просмотра карточек
-showCards(popupPicture)
-// Лайки
-setLike();
-// Удаление карточек
-removeCard();
+formAdd.addEventListener('submit', handleCardFormSubmit);
 
+// Вызов функции добавления карточек из массива
+addCardsArray(initialCards, gallery);
+
+// Вызов функции валидации форм
 enableValidation({
   formSelector: '.form',
   inputSelector: '.form__input',

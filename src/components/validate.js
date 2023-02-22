@@ -1,4 +1,3 @@
-
 export const enableValidation = (config) => {
   // Показать ошибку валидации
   const showInputError = (form, input, errorMessage) => {
@@ -39,11 +38,17 @@ export const enableValidation = (config) => {
       buttonElement.classList.remove(`${config.inactiveButtonClass}`)
     }
   }
-  // Функция устоновки прослушивателя события
+  // Функция установки прослушивателя события
   const setEventListeners = (form) => {
     const inputList = Array.from(form.querySelectorAll(`${config.inputSelector}`));
     const buttonSubmit = form.querySelector(`${config.submitButtonSelector}`);
     toggleButtonState(inputList, buttonSubmit)
+
+    form.addEventListener('reset', () => {
+      setTimeout(() => {
+        toggleButtonState(inputList, buttonSubmit);
+      }, 0);
+    });
     
     inputList.forEach(input => {
       input.addEventListener('input', () => {
@@ -53,11 +58,11 @@ export const enableValidation = (config) => {
     })
   }
   // Валидация всех форм
-  const formValidation = () => {
+  const startFormValidation = () => {
     Array.from(document.querySelectorAll(`${config.formSelector}`)).forEach(form => {
       setEventListeners(form);
     })
   }
 
-  formValidation();
+  startFormValidation();
 }
