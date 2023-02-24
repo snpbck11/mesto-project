@@ -1,9 +1,8 @@
 import './index.css'
-import {popups, popupAdd, popupEdit, formAdd, formEdit, nameInput, aboutInput, pictureNameInput, linkInput, profileName, profileAbout, profileEditButton, cardsAddButton, gallery, initialCards} from './components/constants.js';
+import {popups, popupAdd, popupEdit, formAdd, formEdit, nameInput, aboutInput, pictureNameInput, linkInput, profileName, profileAbout, profileEditButton, cardsAddButton, gallery, initialCards, avatarEditButton, popupAvatar, profileAvatar, avatarLink, formAvatar} from './components/constants.js';
 import {enableValidation} from './components/validate.js';
 import {createCard, addCard, addCardsArray} from './components/cards.js';
 import {closePopup, openPopup} from './components/modals.js'
-
 // Закрытие любого попапа по нажатию на крестик или на оверлей
 popups.forEach(popup => {
   popup.addEventListener('mousedown', (evt) => {
@@ -29,6 +28,23 @@ profileEditButton.addEventListener('click', () => {
 cardsAddButton.addEventListener('click', () => {
   openPopup(popupAdd)
 })
+
+// Обработчик кнопки смены аватара
+avatarEditButton.addEventListener('click', () => {
+  openPopup(popupAvatar, () => {
+    avatarLink.value = '';
+  })
+})
+
+// Обработчик отправки формы смены аватара
+const handleProfileAvatarChange = (evt) => {
+  evt.preventDefault();
+  profileAvatar.src = avatarLink.value;
+  closePopup(popupAvatar);
+  evt.target.reset();
+}
+
+formAvatar.addEventListener('submit', handleProfileAvatarChange);
 
 // Обработчик «отправки» формы редактирования
 // она никуда отправляться не будет
