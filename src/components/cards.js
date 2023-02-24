@@ -23,11 +23,10 @@ const createCard = (titleValue, photoValue) => {
 
   // Открытие попапа с картинкой
   cardPhoto.addEventListener('click', () => {
-    openPopup(popupPicture, () => {
-      picture.src = cardPhoto.src;
-      picture.alt = cardPhoto.alt;
-      caption.textContent = cardPhoto.alt;
-    })
+    openPopup(popupPicture)
+    picture.src = cardPhoto.src;
+    picture.alt = cardPhoto.alt;
+    caption.textContent = cardPhoto.alt;
   })
   
   return cardElement;

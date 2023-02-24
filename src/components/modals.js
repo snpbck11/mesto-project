@@ -5,11 +5,7 @@ const closePopup = (popup) => {
 };
 
 // Функция открытия попапа
-const openPopup = (popup, callaback) => {
-  if (callaback) {
-    callaback();
-  }
-
+const openPopup = (popup) => {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEscape);
 };

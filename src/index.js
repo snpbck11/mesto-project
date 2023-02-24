@@ -19,10 +19,9 @@ popups.forEach(popup => {
 
 // Обработчик кнопки редактирования профиля
 profileEditButton.addEventListener('click', () => {
-  openPopup(popupEdit, () => {
-    nameInput.value = profileName.textContent; 
-    aboutInput.value = profileAbout.textContent;
-  })
+  openPopup(popupEdit);
+  nameInput.value = profileName.textContent; 
+  aboutInput.value = profileAbout.textContent;
 })
 
 // Обработчик кнопки добавления карточек
