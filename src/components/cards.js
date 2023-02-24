@@ -1,5 +1,5 @@
-import { handlePopup } from "./modals.js";
-import { popupPicture } from "./constants.js";
+import { openPopup } from "./modals.js";
+import { caption, picture, popupPicture } from "./constants.js";
 
 // Функция создания, удаления и просмотра карточек
 const createCard = (titleValue, photoValue) => {
@@ -23,9 +23,10 @@ const createCard = (titleValue, photoValue) => {
 
   // Открытие попапа с картинкой
   cardPhoto.addEventListener('click', () => {
-    handlePopup(popupPicture, () => {
-      popupPicture.querySelector('.popup-picture__image').src = cardPhoto.src;
-      popupPicture.querySelector('.popup-picture__caption').textContent = cardPhoto.alt;
+    openPopup(popupPicture, () => {
+      picture.src = cardPhoto.src;
+      picture.alt = cardPhoto.alt;
+      caption.textContent = cardPhoto.alt;
     })
   })
   

@@ -5,7 +5,11 @@ const closePopup = (popup) => {
 };
 
 // Функция открытия попапа
-const openPopup = (popup) => {
+const openPopup = (popup, callaback) => {
+  if (callaback) {
+    callaback();
+  }
+
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEscape);
 };
@@ -18,26 +22,4 @@ const closeByEscape = (evt) => {
   }
 }
 
-const handlePopup = (popup, callback) => {
-  openPopup(popup);
-
-  if (callback) {
-    callback();
-  }
-
-  const popups = document.querySelectorAll('.popup');
-  
-  popups.forEach(popup => {
-    popup.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup_opened')) {
-        closePopup(popup)
-      }
-
-      if (evt.target.classList.contains('popup__close-button')) {
-        closePopup(popup)
-      }
-    })
-  });
-};
-
-export {closePopup, handlePopup}
+export {closePopup, openPopup}

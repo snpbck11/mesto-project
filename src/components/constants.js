@@ -1,7 +1,12 @@
 // Модальные окна
+export const popups = document.querySelectorAll('.popup');
 export const popupEdit = document.querySelector('.popup-edit');  
 export const popupAdd = document.querySelector('.popup-add');
 export const popupPicture = document.querySelector('.popup-picture');
+// Изображение карточки в попапе
+export const picture = popupPicture.querySelector('.popup-picture__image')
+// Подпись к карточке в попапе
+export const caption = popupPicture.querySelector('.popup-picture__caption')
 // Формы и их элементы
 export const formEdit = document.forms.edit;
 export const formAdd = document.forms.add;

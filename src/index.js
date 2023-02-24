@@ -1,11 +1,25 @@
-import {popupAdd, popupEdit, formAdd, formEdit, nameInput, aboutInput, pictureNameInput, linkInput, profileName, profileAbout, profileEditButton, cardsAddButton, gallery, initialCards} from './components/constants.js';
+import './index.css'
+import {popups, popupAdd, popupEdit, formAdd, formEdit, nameInput, aboutInput, pictureNameInput, linkInput, profileName, profileAbout, profileEditButton, cardsAddButton, gallery, initialCards} from './components/constants.js';
 import {enableValidation} from './components/validate.js';
 import {createCard, addCard, addCardsArray} from './components/cards.js';
-import {closePopup, handlePopup} from './components/modals.js'
+import {closePopup, openPopup} from './components/modals.js'
+
+// Закрытие любого попапа по нажатию на крестик или на оверлей
+popups.forEach(popup => {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(popup)
+    }
+
+    if (evt.target.classList.contains('popup__close-button')) {
+      closePopup(popup)
+    }
+  })
+});
 
 // Обработчик кнопки редактирования профиля
 profileEditButton.addEventListener('click', () => {
-  handlePopup(popupEdit, () => {
+  openPopup(popupEdit, () => {
     nameInput.value = profileName.textContent; 
     aboutInput.value = profileAbout.textContent;
   })
@@ -13,7 +27,7 @@ profileEditButton.addEventListener('click', () => {
 
 // Обработчик кнопки добавления карточек
 cardsAddButton.addEventListener('click', () => {
-  handlePopup(popupAdd)
+  openPopup(popupAdd)
 })
 
 // Обработчик «отправки» формы редактирования
