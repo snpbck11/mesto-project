@@ -1,8 +1,11 @@
 import './index.css'
-import {popups, popupAdd, popupEdit, formAdd, formEdit, nameInput, aboutInput, pictureNameInput, linkInput, profileName, profileAbout, profileEditButton, cardsAddButton, gallery, initialCards, avatarEditButton, popupAvatar, profileAvatar, avatarLink, formAvatar} from './components/constants.js';
+import {popups, popupAdd, popupEdit, formAdd, formEdit, nameInput, aboutInput, pictureNameInput, linkInput, profileName, profileAbout, profileEditButton, cardsAddButton, gallery, avatarEditButton, popupAvatar, profileAvatar, avatarLink, formAvatar, myProfile, validateConfig} from './components/constants.js';
 import {enableValidation} from './components/validate.js';
 import {createCard, addCard, addCardsArray} from './components/cards.js';
 import {closePopup, openPopup} from './components/modals.js'
+import { addCardRequest, changeAvatar, setProfileAbout, getProfileAbout, getProfileCards } from './components/api.js';
+import { renderLoading } from './components/utils';
+
 // Закрытие любого попапа по нажатию на крестик или на оверлей
 popups.forEach(popup => {
   popup.addEventListener('mousedown', (evt) => {
@@ -25,7 +28,7 @@ profileEditButton.addEventListener('click', () => {
 
 // Обработчик кнопки добавления карточек
 cardsAddButton.addEventListener('click', () => {
-  openPopup(popupAdd)
+  openPopup(popupAdd);
 })
 
 // Обработчик кнопки смены аватара
@@ -38,20 +41,35 @@ avatarEditButton.addEventListener('click', () => {
 // Обработчик отправки формы смены аватара
 const handleProfileAvatarChange = (evt) => {
   evt.preventDefault();
-  profileAvatar.src = avatarLink.value;
-  closePopup(popupAvatar);
-  evt.target.reset();
+  renderLoading(true, evt);
+  changeAvatar(avatarLink.value)
+    .then((res) => {
+      profileAvatar.src = res.avatar;
+    })
+    .finally(() => {
+      renderLoading(false, evt);
+      closePopup(popupAvatar);
+      evt.target.reset();
+    })
 }
 
+// Сабмит формы обновления аватара
 formAvatar.addEventListener('submit', handleProfileAvatarChange);
 
 // Обработчик «отправки» формы редактирования
 // она никуда отправляться не будет
 const handleProfileFormSubmit = (evt) => {
-    evt.preventDefault();  
-    profileName.textContent = nameInput.value;
-    profileAbout.textContent = aboutInput.value;
-    closePopup(popupEdit);
+  evt.preventDefault();
+  renderLoading(true, evt);
+  setProfileAbout(nameInput.value, aboutInput.value)
+    .then((res) => {
+      profileName.textContent = res.name;
+      profileAbout.textContent = res.about;
+    })
+    .finally(() => {
+      renderLoading(false, evt);
+      closePopup(popupEdit);
+    })
 };
 
 // Cабмит формы редактирования
@@ -60,25 +78,48 @@ formEdit.addEventListener('submit', handleProfileFormSubmit);
 // Обработчик формы добавления карточек
 const handleCardFormSubmit = (evt) => {
   evt.preventDefault();
-  const card = createCard(pictureNameInput.value, linkInput.value);
-
-  addCard(card, gallery);
-  closePopup(popupAdd);
-  evt.target.reset();
+  renderLoading(true, evt);
+  addCardRequest(pictureNameInput.value, linkInput.value)
+  .then((card) => {
+    addCard(createCard(card), gallery);
+  })
+  .finally(() => {
+    renderLoading(false, evt);
+    closePopup(popupAdd);
+    evt.target.reset();
+  })
 };
 
 // Cабмит формы добавления карточек
 formAdd.addEventListener('submit', handleCardFormSubmit);
 
-// Вызов функции добавления карточек из массива
-addCardsArray(initialCards, gallery);
-
 // Вызов функции валидации форм
-enableValidation({
-  formSelector: '.form',
-  inputSelector: '.form__input',
-  submitButtonSelector: '.form__button',
-  inactiveButtonClass: 'form__button_disabled',
-  inputErrorClass: 'form__input_type_error',
-  errorClass: 'form__error_visible'
-}); 
+enableValidation(validateConfig);
+
+const onLoad = () => { 
+  new Promise((res, rej) => {
+    window.onload = res;
+    window.onerror = rej;
+  })
+    .then(() => {
+      return getProfileAbout()
+      .then((profile) => {
+        profileName.textContent = profile.name;
+        profileAbout.textContent = profile.about;
+        profileAvatar.src = profile.avatar;
+        myProfile.id = profile._id;
+        myProfile.name = profile.name
+      });
+    })
+    .then(() => {
+      getProfileCards()
+      .then((cards) => {
+        addCardsArray(cards, gallery);
+      })
+    })
+    .catch((rej) => {
+      console.log(rej)
+    })
+}
+
+onLoad(); 

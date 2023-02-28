@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link rel="stylesheet" href="./index.css"> -->
   <title>Mesto Russia</title>
 </head>
 <body class="page">
@@ -14,13 +13,13 @@
   <main class="content">
     <section class="profile">
       <button type="button" class="profile__avatar-edit-button"></button>
-      <img class="profile__avatar profile__avatar_cover" src="<%=require('./images/avatar.jpg')%>" alt="Аватар">
+      <img class="profile__avatar profile__avatar_cover" src="" alt="Аватар">
       <div class="profile__info">
         <div class="profile__info-container">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <h1 class="profile__name"></h1>
           <button type="button" class="profile__edit-button button"></button>
         </div>
-        <p class="profile__about">Исследователь океана</p>
+        <p class="profile__about"></p>
       </div>
       <button type="button" class="profile__add-button button"></button>
     </section>
@@ -42,7 +41,7 @@
             <span class="form__error about-error"></span>
           </label>
         </fieldset>
-        <button class="form__button" type="submit" name="submit">Сохранить</button>
+        <button class="form__button" type="submit" name="submit" data-save="Сохранить" data-saving="Сохранение...">Сохранить</button>
       </form>
     </div>
   </div>
@@ -61,7 +60,7 @@
             <span class="form__error link-error"></span>
           </label>
         </fieldset> 
-        <button class="form__button" type="submit" name="submit">Создать</button>
+        <button class="form__button" type="submit" name="submit" data-save="Создать" data-saving="Создание...">Создать</button>
       </form>
     </div>
   </div>
@@ -83,7 +82,7 @@
             <span class="form__error avatar-link-error"></span>
           </label>
         </fieldset> 
-        <button class="form__button" type="submit" name="submit">Сохранить</button>
+        <button class="form__button" type="submit" name="submit" data-save="Сохранить" data-saving="Сохранение...">Сохранить</button>
       </form>
     </div>
   </div>
@@ -95,7 +94,10 @@
       <img class="card__photo" src="" alt="">
       <div class="card__description-container">
         <h2 class="card__title"></h2>
-        <button type="button" class="card__like-button"></button>
+        <div class="card__like-container">
+          <button type="button" class="card__like-button"></button>
+          <p class="card__like-counter"></p>
+        </div>
       </div>
       <button type="button" class="button card__trash-button"></button>
     </article>
