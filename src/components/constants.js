@@ -28,7 +28,7 @@ export const avatarEditButton = document.querySelector('.profile__avatar-edit-bu
 // Галерея карточек
 export const gallery = document.querySelector('.gallery');
 // Конфиг валидации форм
-export const validateConfig = {
+export const validateSettings = {
   formSelector: '.form',
   inputSelector: '.form__input',
   submitButtonSelector: '.form__button',

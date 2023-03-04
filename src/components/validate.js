@@ -1,25 +1,24 @@
-export const enableValidation = (config) => {
   // Показать ошибку валидации
-  const showInputError = (form, input, errorMessage) => {
+  const showInputError = (form, input, errorMessage, settings) => {
     const error = form.querySelector(`.${input.id}-error`);
-    input.classList.add(`${config.inputErrorClass}`);
+    input.classList.add(`${settings.inputErrorClass}`);
     error.textContent = errorMessage;
-    error.classList.add(`${config.errorClass}`)
+    error.classList.add(`${settings.errorClass}`)
   }
   // Скрыть ошибку валидации
-  const hideInputError = (form, input) => {
+  const hideInputError = (form, input, settings) => {
     const error = form.querySelector(`.${input.id}-error`);
-    input.classList.remove(`${config.inputErrorClass}`);
+    input.classList.remove(`${settings.inputErrorClass}`);
     error.textContent = '';
   }
   // Проверка инпута на валидность, и всплытие соответсвующих validationMessage
-  const checkValidity = (form, input) =>{
+  const checkValidity = (form, input, settings) =>{
     if (input.validity.patternMismatch) {
-      showInputError(form, input, input.dataset.error)
+      showInputError(form, input, input.dataset.error, settings)
     } else if (!input.validity.valid) {
-      showInputError(form, input, input.validationMessage)
+      showInputError(form, input, input.validationMessage, settings)
     } else {
-      hideInputError(form, input)
+      hideInputError(form, input, settings)
     }
   }
   // Поиск невалидного инпута
@@ -29,40 +28,37 @@ export const enableValidation = (config) => {
     })
   }
   // Смена состояния кнопки в зависимости от валидности формы
-  const toggleButtonState = (inputList, buttonElement) => {
+  const toggleButtonState = (inputList, buttonElement, settings) => {
     if (hasInvalidInput(inputList)) {
       buttonElement.disabled = true;
-      buttonElement.classList.add(`${config.inactiveButtonClass}`);
+      buttonElement.classList.add(`${settings.inactiveButtonClass}`);
     } else {
       buttonElement.disabled = false;
-      buttonElement.classList.remove(`${config.inactiveButtonClass}`)
+      buttonElement.classList.remove(`${settings.inactiveButtonClass}`)
     }
   }
   // Функция установки прослушивателя события
-  const setEventListeners = (form) => {
-    const inputList = Array.from(form.querySelectorAll(`${config.inputSelector}`));
-    const buttonSubmit = form.querySelector(`${config.submitButtonSelector}`);
-    toggleButtonState(inputList, buttonSubmit)
+  const setEventListeners = (form, settings) => {
+    const inputList = Array.from(form.querySelectorAll(`${settings.inputSelector}`));
+    const buttonSubmit = form.querySelector(`${settings.submitButtonSelector}`);
+    toggleButtonState(inputList, buttonSubmit, settings)
 
     form.addEventListener('reset', () => {
       setTimeout(() => {
-        toggleButtonState(inputList, buttonSubmit);
+        toggleButtonState(inputList, buttonSubmit, settings);
       }, 0);
     });
     
     inputList.forEach(input => {
       input.addEventListener('input', () => {
-        checkValidity(form, input);
-        toggleButtonState(inputList, buttonSubmit)
+        checkValidity(form, input, settings);
+        toggleButtonState(inputList, buttonSubmit, settings)
       })
     })
   }
   // Валидация всех форм
-  const startFormValidation = () => {
-    Array.from(document.querySelectorAll(`${config.formSelector}`)).forEach(form => {
-      setEventListeners(form);
+  export const enableValidation = (settings) => {
+    Array.from(document.querySelectorAll(`${settings.formSelector}`)).forEach(form => {
+      setEventListeners(form, settings);
     })
   }
-
-  startFormValidation();
-}

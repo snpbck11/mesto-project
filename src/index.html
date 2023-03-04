@@ -33,15 +33,15 @@
       <form class="form form-edit" name="edit" novalidate>
         <fieldset class="form__set">
           <label class="form__label">
-            <input class="form__input" type="text" id="name" name="name" required placeholder="Имя" value="Жак-Ив Кусто" minlength="2" maxlength="40" data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" pattern="[a-zA-Z|а-яёА-ЯЁ \s\-]*">
+            <input class="form__input" type="text" id="name" name="name" required placeholder="Имя" minlength="2" maxlength="40" data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" pattern="[a-zA-Z|а-яёА-ЯЁ \s\-]*">
             <span class="form__error name-error"></span>
           </label>
           <label class="form__label">
-            <input class="form__input" type="text" id="about" name="about" required placeholder="О себе" value="Исследователь океана" minlength="2" maxlength="200" data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" pattern="[a-zA-Z|а-яёА-ЯЁ \s\-]*">
+            <input class="form__input" type="text" id="about" name="about" required placeholder="О себе" minlength="2" maxlength="200" data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" pattern="[a-zA-Z|а-яёА-ЯЁ \s\-]*">
             <span class="form__error about-error"></span>
           </label>
         </fieldset>
-        <button class="form__button" type="submit" name="submit" data-save="Сохранить" data-saving="Сохранение...">Сохранить</button>
+        <button class="form__button" type="submit" name="submit">Сохранить</button>
       </form>
     </div>
   </div>
@@ -60,7 +60,7 @@
             <span class="form__error link-error"></span>
           </label>
         </fieldset> 
-        <button class="form__button" type="submit" name="submit" data-save="Создать" data-saving="Создание...">Создать</button>
+        <button class="form__button" type="submit" name="submit">Создать</button>
       </form>
     </div>
   </div>
@@ -82,7 +82,7 @@
             <span class="form__error avatar-link-error"></span>
           </label>
         </fieldset> 
-        <button class="form__button" type="submit" name="submit" data-save="Сохранить" data-saving="Сохранение...">Сохранить</button>
+        <button class="form__button" type="submit" name="submit">Сохранить</button>
       </form>
     </div>
   </div>
