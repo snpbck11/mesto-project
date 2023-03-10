@@ -1,8 +1,8 @@
 import './index.css'
-import {popups, popupAdd, popupEdit, formAdd, formEdit, nameInput, aboutInput, pictureNameInput, linkInput, profileName, profileAbout, profileEditButton, cardsAddButton, gallery, avatarEditButton, popupAvatar, profileAvatar, avatarLink, formAvatar, myProfile, validateConfig, validateSettings} from './components/constants.js';
-import {enableValidation} from './components/validate.js';
+import { popups, popupAdd, popupEdit, formAdd, formEdit, nameInput, aboutInput, pictureNameInput, linkInput, profileName, profileAbout, profileEditButton, cardsAddButton, gallery, avatarEditButton, popupAvatar, profileAvatar, avatarLink, formAvatar, myProfile, validateSettings } from './components/constants.js';
+import { enableValidation } from './components/validate.js';
 import {createCard, addCard, addCardsArray} from './components/cards.js';
-import {closePopup, openPopup} from './components/modals.js'
+import { closePopup, openPopup } from './components/modals.js'
 import { addCardRequest, changeAvatar, setProfileAbout, getProfileAbout, getProfileCards } from './components/api.js';
 import { handleSubmit} from './components/utils';
 
