@@ -3,7 +3,7 @@ import { popups, popupAdd, popupEdit, formAdd, formEdit, nameInput, aboutInput, 
 import { enableValidation } from './components/validate.js';
 import {createCard, addCard, addCardsArray} from './components/cards.js';
 import { closePopup, openPopup } from './components/modals.js'
-import { addCardRequest, changeAvatar, setProfileAbout, getProfileAbout, getProfileCards } from './components/api.js';
+import { api } from './components/api.js';
 import { handleSubmit} from './components/utils';
 
 // Закрытие любого попапа по нажатию на крестик или на оверлей
@@ -68,7 +68,7 @@ formEdit.addEventListener('submit', handleProfileFormSubmit);
 // Обработчик формы добавления карточек
 const handleCardFormSubmit = (evt) => {
   function makeRequest() {
-    return addCardRequest(pictureNameInput.value, linkInput.value)
+    return api.addCardRequest(pictureNameInput.value, linkInput.value)
       .then((cardData) => {
         addCard(createCard(cardData), gallery);
       })
@@ -82,7 +82,7 @@ formAdd.addEventListener('submit', handleCardFormSubmit);
 // Вызов функции валидации форм
 enableValidation(validateSettings);
 
-Promise.all([getProfileAbout(), getProfileCards()])
+Promise.all([api.getProfileAbout(), api.getInitialCards()])
   .then(([userData, cards]) => {
     profileName.textContent = userData.name;
     profileAbout.textContent = userData.about;
@@ -90,4 +90,4 @@ Promise.all([getProfileAbout(), getProfileCards()])
     myProfile.id = userData._id;
     myProfile.name = userData.name;
     addCardsArray(cards, gallery)
-  }); 
+  });

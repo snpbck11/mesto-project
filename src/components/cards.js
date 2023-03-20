@@ -1,6 +1,6 @@
 import { openPopup } from "./modals.js";
 import { caption, myProfile, picture, popupPicture } from "./constants.js";
-import { removeCard, removeLikeRequest, setLikeRequest } from "./api.js";
+import { api } from "./api.js";
 import { checkError } from "./utils.js";
 
 // Удаление кнопки корзины, если пользователь не загружал её
@@ -46,14 +46,14 @@ const createCard = (card) => {
   // Лайки
   cardLikeButton.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('card__like-button_active')) {
-      removeLikeRequest(card._id)
+      api.removeLikeRequest(card._id)
         .then((card) => {
           checkLikes(card.likes, cardLikesCounter);
           evt.target.classList.remove('card__like-button_active')
         })
         .catch(checkError);
     } else {
-      setLikeRequest(card._id)
+      api.setLikeRequest(card._id)
         .then((card) => {
           checkLikes(card.likes, cardLikesCounter);
           evt.target.classList.add('card__like-button_active')
@@ -64,7 +64,7 @@ const createCard = (card) => {
 
   // Удаление
   cardTrashButton.addEventListener('click', (evt) => {
-    removeCard(card._id)
+    api.removeCard(card._id)
       .then(() => {
         evt.target.closest('.card').remove();
       })
