@@ -1,10 +1,13 @@
 import './index.css'
 import { popups, popupAdd, popupEdit, formAdd, formEdit, nameInput, aboutInput, pictureNameInput, linkInput, profileName, profileAbout, profileEditButton, cardsAddButton, gallery, avatarEditButton, popupAvatar, profileAvatar, avatarLink, formAvatar, myProfile, validateSettings } from './components/constants.js';
 import { enableValidation } from './components/validate.js';
-import {createCard, addCard, addCardsArray} from './components/cards.js';
+import Card from './components/cards.js';
 import { closePopup, openPopup } from './components/modals.js'
 import { api } from './components/api.js';
 import { handleSubmit} from './components/utils';
+import Section from './components/Section.js';
+
+
 
 // Закрытие любого попапа по нажатию на крестик или на оверлей
 popups.forEach(popup => {
@@ -89,5 +92,13 @@ Promise.all([api.getProfileAbout(), api.getInitialCards()])
     profileAvatar.src = userData.avatar;
     myProfile.id = userData._id;
     myProfile.name = userData.name;
-    addCardsArray(cards, gallery)
+    const addCard = new Section({
+      items: cards, 
+      renderer: (data) => {
+        const card = new Card(data, '#card-template')
+        const cardElement = card.createCard()
+        addCard.addItem(cardElement)
+      } 
+    }, '.gallery')
+    addCard.rendereritems()
   });
