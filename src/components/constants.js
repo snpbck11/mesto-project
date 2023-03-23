@@ -27,7 +27,7 @@ export const profileEditButton = document.querySelector('.profile__edit-button')
 export const cardsAddButton = document.querySelector('.profile__add-button');
 export const avatarEditButton = document.querySelector('.profile__avatar-edit-button');
 // Галерея карточек
-export const gallery = document.querySelector('.gallery');
+export const gallery = '.gallery';
 // Конфиг валидации форм
 export const validateSettings = {
   formSelector: '.form',
