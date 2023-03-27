@@ -1,26 +1,12 @@
 import './index.css'
 import { popups, popupAdd, popupEdit, formAdd, formEdit, nameInput, aboutInput, pictureNameInput, linkInput, profileName, profileAbout, profileEditButton, cardsAddButton, gallery, avatarEditButton, popupAvatar, profileAvatar, avatarLink, formAvatar, myProfile, validateSettings } from './components/constants.js';
 import { enableValidation } from './components/validate.js';
-import Card from './components/cards.js';
-import { closePopup, openPopup } from './components/modals.js'
-import { api } from './components/api.js';
+import Card from './components/Card.js';
+import Popup from './components/Popup.js'
+import { api } from './components/Api.js';
 import { handleSubmit} from './components/utils';
 import Section from './components/Section.js';
 
-
-
-// Закрытие любого попапа по нажатию на крестик или на оверлей
-popups.forEach(popup => {
-  popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-      closePopup(popup)
-    }
-
-    if (evt.target.classList.contains('popup__close-button')) {
-      closePopup(popup)
-    }
-  })
-});
 
 // Обработчик кнопки редактирования профиля
 profileEditButton.addEventListener('click', () => {
