@@ -1,4 +1,4 @@
-import { closePopup } from "./modals";
+import Popup from "./Popup.js";
 
 export const renderLoading = (isLoading, button, buttonText, loadingText='Сохранение...' ) => {
   if (isLoading) {
@@ -8,8 +8,11 @@ export const renderLoading = (isLoading, button, buttonText, loadingText='Сох
   }
 }
 
-export const handleSubmit = (request, evt, popup, loadingText = 'Сохранение...') => {
+export const handleSubmit = (request, evt, popup, loadingText = 'Сохранение...', selector) => {
  evt.preventDefault();
+
+ const popupS = new Popup(selector);
+ popupS.open()
 
  const submitButton = evt.submitter;
  const initialText = submitButton.textContent;
@@ -19,7 +22,7 @@ export const handleSubmit = (request, evt, popup, loadingText = 'Сохране�
  request()
   .then(() => {
     evt.target.reset();
-    closePopup(popup);
+    popupS.close();
   })
   .catch(checkError)
   .finally(() => {
