@@ -1,12 +1,15 @@
 import './index.css'
 import { popups, popupAdd, popupEdit, formAdd, formEdit, nameInput, aboutInput, pictureNameInput, linkInput, profileName, profileAbout, profileEditButton, cardsAddButton, gallery, avatarEditButton, popupAvatar, profileAvatar, avatarLink, formAvatar, myProfile, validateSettings } from './components/constants.js';
-import { enableValidation } from './components/validate.js';
+import FormValidator from './components/FormValidator.js';
 import Card from './components/Card.js';
 import Popup from './components/Popup.js'
 import { api } from './components/Api.js';
 import { handleSubmit} from './components/utils';
 import Section from './components/Section.js';
 
+const formAddValidator = new FormValidator(validateSettings, formAdd);
+const formEditValidator = new FormValidator(validateSettings, formEdit);
+const formAvatarValidator = new FormValidator(validateSettings, formAvatar);
 
 // Обработчик кнопки редактирования профиля
 profileEditButton.addEventListener('click', () => {
@@ -69,7 +72,10 @@ const handleCardFormSubmit = (evt) => {
 formAdd.addEventListener('submit', handleCardFormSubmit);
 
 // Вызов функции валидации форм
-enableValidation(validateSettings);
+formAddValidator.enableValidation();
+formEditValidator.enableValidation();
+formAvatarValidator.enableValidation();
+
 
 Promise.all([api.getProfileAbout(), api.getInitialCards()])
   .then(([userData, cards]) => {
