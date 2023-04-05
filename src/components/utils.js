@@ -8,12 +8,9 @@ export const renderLoading = (isLoading, button, buttonText, loadingText='Сох
   }
 }
 
-export const handleSubmit = (request, evt, popup, loadingText = 'Сохранение...', selector) => {
+export const handleSubmit = (request, evt, selector, loadingText = 'Сохранение...') => {
  evt.preventDefault();
-
- const popupS = new Popup(selector);
- popupS.open()
-
+ 
  const submitButton = evt.submitter;
  const initialText = submitButton.textContent;
 
