@@ -11,7 +11,6 @@ export default class Card {
     this._likes = data.likes;
     this._owner = data.owner._id;
     this._selector = selector;
-
   }
 
   _getElement() {
@@ -69,25 +68,23 @@ export default class Card {
           })
           .catch(checkError);
       }
-
-      // Удаление
-      this._cardTrashButton.addEventListener('click', (evt) => {
-        api.removeCard(this._id)
-          .then(() => {
-            evt.target.closest('.card').remove();
-          })
-          .catch(checkError);
-      });
+    })
+    // Удаление
+    this._cardTrashButton.addEventListener('click', (evt) => {
+      api.removeCard(this._id)
+        .then(() => {
+          evt.target.closest('.card').remove();
+        })
+        .catch(checkError);
     });
-
 
     // Открытие попапа с картинкой
     this._cardPhoto.addEventListener('click', () => {
       const popupPicture = new PopupWIthImage('.popup-picture', this._cardPhoto);
       popupPicture.open();
       popupPicture.setEventListeners();
-    });
-  }
+      });
+    }
 
 
   createCard() {

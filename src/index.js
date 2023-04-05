@@ -1,75 +1,90 @@
 import './index.css'
-import { popups, popupAdd, popupEdit, formAdd, formEdit, nameInput, aboutInput, pictureNameInput, linkInput, profileName, profileAbout, profileEditButton, cardsAddButton, gallery, avatarEditButton, popupAvatar, profileAvatar, avatarLink, formAvatar, myProfile, validateSettings } from './components/constants.js';
+import { formAdd, formEdit, nameInput, aboutInput, profileName, profileAbout, profileEditButton, cardsAddButton, avatarEditButton, profileAvatar, formAvatar, myProfile, validateSettings } from './components/constants.js';
 import FormValidator from './components/FormValidator.js';
 import Card from './components/Card.js';
-import Popup from './components/Popup.js'
 import { api } from './components/Api.js';
-import { handleSubmit} from './components/utils';
+import { checkError } from './components/utils';
 import Section from './components/Section.js';
+import PopuWithForm from './components/PopupWIthForm.js';
 
 const formAddValidator = new FormValidator(validateSettings, formAdd);
 const formEditValidator = new FormValidator(validateSettings, formEdit);
 const formAvatarValidator = new FormValidator(validateSettings, formAvatar);
 
+const popupWithFormEdit = new PopuWithForm({
+  selector: '.popup-edit',
+  submitForm: (obj) => {
+    return api.setProfileAbout(obj.name, obj.about)
+      .then((userData) => {
+        profileName.textContent = userData.name;
+        profileAbout.textContent = userData.about;
+      })      
+      .catch(checkError)
+      .finally(() => {
+        popupWithFormEdit.close();
+      })
+  }
+})
+
+popupWithFormEdit.setEventListeners();
+
 // Обработчик кнопки редактирования профиля
 profileEditButton.addEventListener('click', () => {
-  openPopup(popupEdit);
+  popupWithFormEdit.open();
   nameInput.value = profileName.textContent; 
   aboutInput.value = profileAbout.textContent;
 })
 
-// Обработчик кнопки добавления карточек
-cardsAddButton.addEventListener('click', () => {
-  openPopup(popupAdd);
+const popupWIthAvatarChange = new PopuWithForm({
+  selector: '.popup-avatar',
+  submitForm: (obj) => {
+    return api.changeAvatar(obj.link)
+    .then((userData) => {
+      profileAvatar.src = userData.avatar;
+    })
+    .catch(checkError)
+    .finally(() => {
+      popupWIthAvatarChange.close();
+    })
+  }
 })
+
+popupWIthAvatarChange.setEventListeners();
+
 
 // Обработчик кнопки смены аватара
 avatarEditButton.addEventListener('click', () => {
-  openPopup(popupAvatar)
+  popupWIthAvatarChange.open();
+});
+
+
+const popupWithFormAdd = new PopuWithForm({
+  selector:'.popup-add', 
+  submitForm: (obj) => {
+   return api.addCardRequest(obj.title, obj.link)
+    .then((data) => {
+      const addCard = new Section({
+        items: [data],
+        renderer: (item) => {
+          console.log(item)
+          const card = new Card(item, '#card-template')
+          const cardElement = card.createCard();
+          console.log(cardElement)
+          addCard.addItem(cardElement);
+       }}, '.gallery');
+      addCard.rendererItems();
+    })
+    .finally(() => {
+      popupWithFormAdd.close();
+    })
+}})
+
+popupWithFormAdd.setEventListeners();
+
+  // Обработчик кнопки добавления карточек
+cardsAddButton.addEventListener('click', () => {
+  popupWithFormAdd.open();
 })
-
-// Обработчик отправки формы смены аватара
-const handleProfileAvatarChange = (evt) => {
-  function makeRequest() {
-    return changeAvatar(avatarLink.value)
-      .then((userData) => {
-        profileAvatar.src = userData.avatar;
-      })
-  }
-  handleSubmit(makeRequest, evt, popupAvatar)
-}
-
-// Сабмит формы обновления аватара
-formAvatar.addEventListener('submit', handleProfileAvatarChange);
-
-// Обработчик «отправки» формы редактирования
-const handleProfileFormSubmit = (evt) => {
-  function makeRequest() {
-    return setProfileAbout(nameInput.value, aboutInput.value)
-      .then((userData) => {
-        profileName.textContent = userData.name;
-        profileAbout.textContent = userData.about;
-      })
-  }
-  handleSubmit(makeRequest, evt, popupEdit);
-}
-
-// Cабмит формы редактирования
-formEdit.addEventListener('submit', handleProfileFormSubmit);
-
-// Обработчик формы добавления карточек
-const handleCardFormSubmit = (evt) => {
-  function makeRequest() {
-    return api.addCardRequest(pictureNameInput.value, linkInput.value)
-      .then((cardData) => {
-        addCard(createCard(cardData), gallery);
-      })
-  }
-  handleSubmit(makeRequest, evt, popupAdd);
-}
-
-// Cабмит формы добавления карточек
-formAdd.addEventListener('submit', handleCardFormSubmit);
 
 // Вызов функции валидации форм
 formAddValidator.enableValidation();
@@ -92,5 +107,5 @@ Promise.all([api.getProfileAbout(), api.getInitialCards()])
         addCard.addItem(cardElement)
       } 
     }, '.gallery')
-    addCard.rendereritems()
+    addCard.rendererItems();
   });
