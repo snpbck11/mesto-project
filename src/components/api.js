@@ -1,5 +1,5 @@
 class Api {
-  constructor({baseUrl, headers}) {
+  constructor({ baseUrl, headers }) {
     this.url = baseUrl;
     this.headers = headers;
   }
@@ -8,7 +8,7 @@ class Api {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`Ошибка ${res.status}`)
+    return Promise.reject(`Ошибка ${res.status}`);
   }
 
   _request(endpoint, options) {
@@ -16,77 +16,77 @@ class Api {
   }
 
   setProfileAbout(nameInput, aboutInput) {
-    return this._request('/users/me', {
-      method: 'PATCH',
+    return this._request("/users/me", {
+      method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
         name: nameInput,
-        about: aboutInput
-      })
-    })
+        about: aboutInput,
+      }),
+    });
   }
 
   getProfileAbout() {
-    return this._request('/users/me', {
-      method: 'GET',
-      headers: this.headers
-    })
+    return this._request("/users/me", {
+      method: "GET",
+      headers: this.headers,
+    });
   }
 
   getInitialCards() {
-    return this._request('/cards', {
-      method: 'GET',
-      headers: this.headers
-    })
+    return this._request("/cards", {
+      method: "GET",
+      headers: this.headers,
+    });
   }
 
   addCardRequest(nameInput, linkInput) {
-    return this._request('/cards', {
-      method: 'POST',
+    return this._request("/cards", {
+      method: "POST",
       headers: this.headers,
       body: JSON.stringify({
         name: nameInput,
-        link: linkInput
-      })
-    })
+        link: linkInput,
+      }),
+    });
   }
 
   setLikeRequest(cardId) {
     return this._request(`/cards/likes/${cardId}`, {
-      method: 'PUT',
-      headers: this.headers
-    })
+      method: "PUT",
+      headers: this.headers,
+    });
   }
 
   removeLikeRequest(cardId) {
     return this._request(`/cards/likes/${cardId}`, {
-      method: 'DELETE',
-      headers: this.headers
-    })
+      method: "DELETE",
+      headers: this.headers,
+    });
   }
 
   removeCard(cardId) {
-    return this._request(`/cards/${cardId}`,  {
-      method: 'DELETE',
-      headers: this.headers
-    })
+    return this._request(`/cards/${cardId}`, {
+      method: "DELETE",
+      headers: this.headers,
+    });
   }
 
   changeAvatar(linkInput) {
-    return this._request('/users/me/avatar', {
-      method: 'PATCH',
+    return this._request("/users/me/avatar", {
+      method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
-        avatar: linkInput
-      })
+        avatar: linkInput,
+      }),
     });
   }
 }
 
 export const api = new Api({
-  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-20',
+  baseUrl: "https://nomoreparties.co/v1/plus-cohort-20",
   headers: {
-    authorization: 'c29acbcd-e400-4694-90fd-37fde0fe5a19',
-    'Content-Type': 'application/json'
-  }
-})
+    authorization: "c29acbcd-e400-4694-90fd-37fde0fe5a19",
+    "Content-Type": "application/json",
+  },
+});

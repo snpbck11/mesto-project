@@ -1,4 +1,3 @@
-
 import Popup from "./Popup.js";
 
 export default class PopupWIthImage extends Popup {
@@ -8,18 +7,11 @@ export default class PopupWIthImage extends Popup {
   }
 
   open() {
-    const picture = document.querySelector('.popup-picture__image');
+    const picture = document.querySelector(".popup-picture__image");
     picture.src = this.photo.src;
     picture.alt = this.photo.alt;
-    document.querySelector('.popup-picture__caption').textContent = this.photo.alt;
+    document.querySelector(".popup-picture__caption").textContent =
+      this.photo.alt;
     super.open();
   }
 }
-
-//      // Открытие попапа с картинкой
-//  this._cardPhoto.addEventListener('click', () => {
-//    openPopup(popupPicture);
-//    picture.src = cardPhoto.src;
-//    picture.alt = cardPhoto.alt;
-//    caption.textContent = cardPhoto.alt;
-//  });
