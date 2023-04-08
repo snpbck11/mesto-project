@@ -37,7 +37,4 @@ export const validateSettings = {
   errorClass: "form__error_visible",
 };
 // Мой профиль
-export const myProfile = {
-  id: "",
-  name: "",
-};
+export let myProfileId = null;
