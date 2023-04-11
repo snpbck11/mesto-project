@@ -1,106 +1,152 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mesto Russia</title>
-</head>
-<body class="page">
-  <header class="header">
-    <img src="<%=require('./images/logo.svg')%>" alt="Место" class="header__logo">
-  </header>
-  <main class="content">
-    <section class="profile">
-      <button type="button" class="profile__avatar-edit-button"></button>
-      <img class="profile__avatar profile__avatar_cover" src="" alt="Аватар">
-      <div class="profile__info">
-        <div class="profile__info-container">
-          <h1 class="profile__name"></h1>
-          <button type="button" class="profile__edit-button button"></button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mesto Russia</title>
+  </head>
+  <body class="page">
+    <header class="header">
+      <img
+        src="<%=require('./images/logo.svg')%>"
+        alt="Место"
+        class="header__logo" />
+    </header>
+    <main class="content">
+      <section class="profile">
+        <button type="button" class="profile__avatar-edit-button"></button>
+        <img
+          class="profile__avatar profile__avatar_cover"
+          src=""
+          alt="Аватар" />
+        <div class="profile__info">
+          <div class="profile__info-container">
+            <h1 class="profile__name"></h1>
+            <button type="button" class="profile__edit-button button"></button>
+          </div>
+          <p class="profile__about"></p>
         </div>
-        <p class="profile__about"></p>
+        <button type="button" class="profile__add-button button"></button>
+      </section>
+      <section class="gallery" aria-label="Галерея"></section>
+    </main>
+    <div class="popup popup-edit overlay">
+      <div class="popup__container">
+        <button type="button" class="popup__close-button button"></button>
+        <h3 class="popup__title">Редактировать профиль</h3>
+        <form class="form form-edit" name="edit" novalidate>
+          <fieldset class="form__set">
+            <label class="form__label">
+              <input
+                class="form__input"
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Имя"
+                minlength="2"
+                maxlength="40"
+                data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+                pattern="[a-zA-Z|а-яёА-ЯЁ \s\-]*" />
+              <span class="form__error name-error"></span>
+            </label>
+            <label class="form__label">
+              <input
+                class="form__input"
+                type="text"
+                id="about"
+                name="about"
+                required
+                placeholder="О себе"
+                minlength="2"
+                maxlength="200"
+                data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+                pattern="[a-zA-Z|а-яёА-ЯЁ \s\-]*" />
+              <span class="form__error about-error"></span>
+            </label>
+          </fieldset>
+          <button class="form__button" type="submit" name="submit">
+            Сохранить
+          </button>
+        </form>
       </div>
-      <button type="button" class="profile__add-button button"></button>
-    </section>
-    <section class="gallery" aria-label="Галерея">
-    </section>
-  </main> 
-  <div class="popup popup-edit overlay"> 
-    <div class="popup__container">
-      <button type="button" class="popup__close-button button"></button>
-      <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="form form-edit" name="edit" novalidate>
-        <fieldset class="form__set">
-          <label class="form__label">
-            <input class="form__input" type="text" id="name" name="name" required placeholder="Имя" minlength="2" maxlength="40" data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" pattern="[a-zA-Z|а-яёА-ЯЁ \s\-]*">
-            <span class="form__error name-error"></span>
-          </label>
-          <label class="form__label">
-            <input class="form__input" type="text" id="about" name="about" required placeholder="О себе" minlength="2" maxlength="200" data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" pattern="[a-zA-Z|а-яёА-ЯЁ \s\-]*">
-            <span class="form__error about-error"></span>
-          </label>
-        </fieldset>
-        <button class="form__button" type="submit" name="submit">Сохранить</button>
-      </form>
     </div>
-  </div>
-  <div class="popup popup-add overlay">
-    <div class="popup__container">
-      <button type="button" class="popup__close-button button"></button>
-      <h3 class="popup__title">Новое место</h3>
-      <form class="form form-add" name="add" novalidate>
-        <fieldset class="form__set">
-          <label class="form__label">
-            <input class="form__input" type="text" id="title" name="title" required placeholder="Название" minlength="2" maxlength="30" data-error="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" pattern="[a-zA-Z|а-яёА-ЯЁ \s\-]*"">
-            <span class="form__error title-error"></span>
-          </label>
-          <label class="form__label">
-            <input class="form__input" type="url" id="link" name="link" required placeholder="Ссылка на картинку">
-            <span class="form__error link-error"></span>
-          </label>
-        </fieldset> 
-        <button class="form__button" type="submit" name="submit">Создать</button>
-      </form>
+    <div class="popup popup-add overlay">
+      <div class="popup__container">
+        <button type="button" class="popup__close-button button"></button>
+        <h3 class="popup__title">Новое место</h3>
+        <form class="form form-add" name="add" novalidate>
+          <fieldset class="form__set">
+            <label class="form__label">
+              <input class="form__input" type="text" id="title" name="title"
+              required placeholder="Название" minlength="2" maxlength="30"
+              data-error="Разрешены только латинские, кириллические буквы, знаки
+              дефиса и пробелы" pattern="[a-zA-Z|а-яёА-ЯЁ \s\-]*"">
+              <span class="form__error title-error"></span>
+            </label>
+            <label class="form__label">
+              <input
+                class="form__input"
+                type="url"
+                id="link"
+                name="link"
+                required
+                placeholder="Ссылка на картинку" />
+              <span class="form__error link-error"></span>
+            </label>
+          </fieldset>
+          <button class="form__button" type="submit" name="submit">
+            Создать
+          </button>
+        </form>
+      </div>
     </div>
-  </div>
-  <div class="popup popup-picture overlay overlay_popup-picture">
-    <div class="popup-picture__container">
-      <button type="button" class="popup__close-button button"></button>
-      <img class="popup-picture__image" src="" alt=""> 
-      <figcaption class="popup-picture__caption"></figcaption>     
+    <div class="popup popup-picture overlay overlay_popup-picture">
+      <div class="popup-picture__container">
+        <button type="button" class="popup__close-button button"></button>
+        <img class="popup-picture__image" src="" alt="" />
+        <figcaption class="popup-picture__caption"></figcaption>
+      </div>
     </div>
-  </div>
-  <div class="popup popup-avatar overlay">
-    <div class="popup__container">
-      <button type="button" class="popup__close-button button"></button>
-      <h3 class="popup__title">Обновить аватар</h3>
-      <form class="form form-avatar" name="avatar" novalidate>
-        <fieldset class="form__set">
-          <label class="form__label">
-            <input class="form__input" type="url" id="link" name="link" required placeholder="Ссылка на картинку">
-            <span class="form__error link-error"></span>
-          </label>
-        </fieldset> 
-        <button class="form__button" type="submit" name="submit">Сохранить</button>
-      </form>
+    <div class="popup popup-avatar overlay">
+      <div class="popup__container">
+        <button type="button" class="popup__close-button button"></button>
+        <h3 class="popup__title">Обновить аватар</h3>
+        <form class="form form-avatar" name="avatar" novalidate>
+          <fieldset class="form__set">
+            <label class="form__label">
+              <input
+                class="form__input"
+                type="url"
+                id="link"
+                name="link"
+                required
+                placeholder="Ссылка на картинку" />
+              <span class="form__error link-error"></span>
+            </label>
+          </fieldset>
+          <button class="form__button" type="submit" name="submit">
+            Сохранить
+          </button>
+        </form>
+      </div>
     </div>
-  </div>
-  <footer class="footer">
-    <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
-  </footer>
-  <template id="card-template">
-    <article class="card">
-      <img class="card__photo" src="" alt="">
-      <div class="card__description-container">
-        <h2 class="card__title"></h2>
-        <div class="card__like-container">
-          <button type="button" class="card__like-button"></button>
-          <p class="card__like-counter"></p>
+    <footer class="footer">
+      <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
+    </footer>
+    <template id="card-template">
+      <article class="card">
+        <img class="card__photo" src="" alt="" />
+        <div class="card__description-container">
+          <h2 class="card__title"></h2>
+          <div class="card__like-container">
+            <button type="button" class="card__like-button"></button>
+            <p class="card__like-counter"></p>
+          </div>
         </div>
-      </div>
-      <button type="button" class="button card__trash-button"></button>
-    </article>
-  </template>
-</body>
+        <button type="button" class="button card__trash-button"></button>
+      </article>
+    </template>
+  </body>
 </html>

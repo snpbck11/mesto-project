@@ -1,10 +1,13 @@
-
 export default class Card {
-  constructor({data, myProfileId, handleLike, handleRemoveCard, handleClick}, selector) {
+  constructor(
+    { data, myProfileId, handleLike, handleRemoveCard, handleClick },
+    selector
+  ) {
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
     this._owner = data.owner._id;
+    this._id = data._id;
     this._userId = myProfileId;
     this._selector = selector;
     this._handleLike = handleLike;
@@ -22,14 +25,15 @@ export default class Card {
   }
 
   // Удаление кнопки корзины, если пользователь не загружал её
-  _hideTrashButton () {
+  _hideTrashButton() {
     if (this._userId !== this._owner) {
       this._cardTrashButton.remove();
     }
-  };
+  }
 
   // Проверка и установка количества лайков
-  checkLikes = (likes) => {
+  checkLikes(likes) {
+    this._likes = likes;
     if (likes.length > 0) {
       this._cardLikesCounter.classList.add("card__like-counter_active");
       this._cardLikesCounter.textContent = likes.length;
@@ -37,25 +41,25 @@ export default class Card {
       this._cardLikesCounter.classList.remove("card__like-counter_active");
       this._cardLikesCounter.textContent = "";
     }
-  };
+  }
 
   // Проверка на наличие моего лайка
-  checkMyLike () {
-   return this._likes.some(like => like._id === this._userId);
+  checkMyLike() {
+    return this._likes.some((like) => like._id === this._userId);
   }
 
   // Поставить лайк
   setLike() {
-    this._cardLikeButton.classList.add('card__like-button_active');
+    this._cardLikeButton.classList.add("card__like-button_active");
   }
 
   // Убрать лайк
   removeLike() {
-    this._cardLikeButton.classList.remove('card__like-button_active');
+    this._cardLikeButton.classList.remove("card__like-button_active");
   }
 
   removeCard() {
-    this._element.remove()
+    this._element.remove();
   }
 
   _setEventsListeners() {
@@ -93,7 +97,7 @@ export default class Card {
 
     if (this.checkMyLike()) {
       this.setLike();
-    };
+    }
 
     return this._element;
   }
