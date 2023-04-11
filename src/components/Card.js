@@ -1,16 +1,18 @@
-import { myProfile } from "./constants.js";
-import { api } from "./Api.js";
-import { checkError } from "./utils.js";
-import PopupWIthImage from "./PopupWithImage.js";
-
 export default class Card {
-  constructor(data, selector) {
+  constructor(
+    { data, myProfileId, handleLike, handleRemoveCard, handleClick },
+    selector
+  ) {
     this._name = data.name;
     this._link = data.link;
-    this._id = data._id;
     this._likes = data.likes;
     this._owner = data.owner._id;
+    this._id = data._id;
+    this._userId = myProfileId;
     this._selector = selector;
+    this._handleLike = handleLike;
+    this._handleRemoveCard = handleRemoveCard;
+    this._handleClick = handleClick;
   }
 
   _getElement() {
@@ -23,71 +25,56 @@ export default class Card {
   }
 
   // Удаление кнопки корзины, если пользователь не загружал её
-  _hideTrashButton = (owner, button) => {
-    if (myProfile.id !== owner) {
-      button.remove();
+  _hideTrashButton() {
+    if (this._userId !== this._owner) {
+      this._cardTrashButton.remove();
     }
-  };
+  }
 
   // Проверка и установка количества лайков
-  _checkLikes = (likes, counter) => {
+  checkLikes(likes) {
+    this._likes = likes;
     if (likes.length > 0) {
-      counter.classList.add("card__like-counter_active");
-      counter.textContent = likes.length;
+      this._cardLikesCounter.classList.add("card__like-counter_active");
+      this._cardLikesCounter.textContent = likes.length;
     } else {
-      counter.classList.remove("card__like-counter_active");
-      counter.textContent = "";
+      this._cardLikesCounter.classList.remove("card__like-counter_active");
+      this._cardLikesCounter.textContent = "";
     }
-  };
+  }
 
   // Проверка на наличие моего лайка
-  _checkMyLike = (likes, button) => {
-    likes.forEach((like) => {
-      if (like.name === myProfile.name) {
-        button.classList.add("card__like-button_active");
-      }
-    });
-  };
+  checkMyLike() {
+    return this._likes.some((like) => like._id === this._userId);
+  }
+
+  // Поставить лайк
+  setLike() {
+    this._cardLikeButton.classList.add("card__like-button_active");
+  }
+
+  // Убрать лайк
+  removeLike() {
+    this._cardLikeButton.classList.remove("card__like-button_active");
+  }
+
+  removeCard() {
+    this._element.remove();
+  }
 
   _setEventsListeners() {
     // Лайки
-    this._cardLikeButton.addEventListener("click", (evt) => {
-      if (evt.target.classList.contains("card__like-button_active")) {
-        api
-          .removeLikeRequest(this._id)
-          .then((card) => {
-            this._checkLikes(card.likes, this._cardLikesCounter);
-            evt.target.classList.remove("card__like-button_active");
-          })
-          .catch(checkError);
-      } else {
-        api
-          .setLikeRequest(this._id)
-          .then((card) => {
-            this._checkLikes(card.likes, this._cardLikesCounter);
-            evt.target.classList.add("card__like-button_active");
-          })
-          .catch(checkError);
-      }
+    this._cardLikeButton.addEventListener("click", () => {
+      this._handleLike();
     });
     // Удаление
-    this._cardTrashButton.addEventListener("click", (evt) => {
-      api
-        .removeCard(this._id)
-        .then(() => {
-          evt.target.closest(".card").remove();
-        })
-        .catch(checkError);
+    this._cardTrashButton.addEventListener("click", () => {
+      this._handleRemoveCard();
     });
 
     // Открытие попапа с картинкой
     this._cardPhoto.addEventListener("click", () => {
-      const popupPicture = new PopupWIthImage(
-        ".popup-picture",
-        this._cardPhoto
-      );
-      popupPicture.open();
-      popupPicture.setEventListeners();
+      this._handleClick();
     });
   }
 
@@ -104,11 +91,13 @@ export default class Card {
 
     this._setEventsListeners();
 
-    this._hideTrashButton(this._owner, this._cardTrashButton);
+    this._hideTrashButton();
 
-    this._checkLikes(this._likes, this._cardLikesCounter);
+    this.checkLikes(this._likes);
 
-    this._checkMyLike(this._likes, this._cardLikeButton);
+    if (this.checkMyLike()) {
+      this.setLike();
+    }
 
     return this._element;
   }

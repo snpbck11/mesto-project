@@ -26,11 +26,8 @@ export default class FormValidator {
   // Проверка инпута на валидность, и всплытие соответсвующих validationMessage
   _checkValidity(input) {
     if (input.validity.patternMismatch) {
-      input.setCustomValidity(input.dataset.errorMessage);
-    } else {
-      input.setCustomValidity("");
-    }
-    if (!input.validity.valid) {
+      this._showInputError(input, input.dataset.error);
+    } else if (!input.validity.valid) {
       this._showInputError(input, input.validationMessage);
     } else {
       this._hideInputError(input);
